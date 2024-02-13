@@ -24,7 +24,7 @@ import { z } from "zod";
 import { Loader2, LogIn } from "lucide-react";
 import { signInUser } from "@/authentification/auth.supbase";
 import { useState } from "react";
-import { faGitlabSquare } from "@fortawesome/free-brands-svg-icons/faGitlabSquare";
+import { toast } from "sonner";
 
 const LoginFormSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -45,8 +45,9 @@ const LoginPage = () => {
     try {
       setIsloading(true);
       await signInUser(values);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      toast.error(error.message);
     } finally {
       setIsloading(false);
     }
