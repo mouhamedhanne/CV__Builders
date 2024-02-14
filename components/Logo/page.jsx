@@ -1,4 +1,4 @@
-import Logo from "@/public/assets/Images/cv-builder2.png";
+import Logo from "@/public/assets/Images/cv-builder1.png";
 import Image from "next/image";
 import Link from "next/link";
 

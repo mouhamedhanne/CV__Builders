@@ -26,7 +26,9 @@ function page() {
                 className="text-3xl hidden lg:block"
               />
             </Link>
-            <Button>Login</Button>
+            <Link href="/login">
+              <Button>Login</Button>
+            </Link>
           </div>
         </div>
       </nav>
