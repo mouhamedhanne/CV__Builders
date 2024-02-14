@@ -25,6 +25,7 @@ import { Loader2, LogIn } from "lucide-react";
 import { signInUser } from "@/authentification/auth.supbase";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next-nprogress-bar";
 
 const LoginFormSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -36,6 +37,8 @@ type LoginformValue = z.infer<typeof LoginFormSchema>;
 const LoginPage = () => {
   const [isLoading, setIsloading] = useState(false);
 
+  const router = useRouter();
+
   const form = useForm<LoginformValue>({
     resolver: zodResolver(LoginFormSchema),
   });
@@ -45,8 +48,9 @@ const LoginPage = () => {
     try {
       setIsloading(true);
       await signInUser(values);
+      router.push("/dashboard");
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     } finally {
       setIsloading(false);
@@ -116,13 +120,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-{
-  /**
-const form =
-    useForm <
-    z.infer <
-    typeof loginFormSchema >> { resolver: zodResolver(loginFormSchema) };
-
- */
-}
