@@ -1,9 +1,10 @@
 import supabase from "@/lib/database";
 import { useEffect, useState } from "react";
+import { AuthError, User } from "@supabase/supabase-js";
 
 const useSession = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<AuthError | null>(null);
 
   useEffect(() => {
@@ -42,15 +43,14 @@ const useSession = () => {
     }
   };
 
-  refreshSession();
-
   return {
     user,
     loading,
     error,
+    refreshSession,
   };
 };
 
 export default useSession;
 
-//<"idle" | "pending" | "error">
+//
