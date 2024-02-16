@@ -24,31 +24,37 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, Save } from "lucide-react";
 import { useState } from "react";
-import { updateUserEmail } from "@/authentification/auth.supbase";
+import { updateUserPassword } from "@/authentification/auth.supbase";
 
-const UpdateEmailSchema = z.object({
-  email: z
-    .string({ required_error: "Required" })
-    .email("Invalid email address"),
-  password: z.string().min(8, "password must contain at least 8 chars"),
-});
+const UpdatePasswordlSchema = z
+  .object({
+    password: z.string().min(8, "password must contain at least 8 chars"),
+    newPassword: z.string().min(8, "password must contain at least 8 chars"),
+    confirmNewPassword: z
+      .string()
+      .min(8, "password must contain at least 8 chars"),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords do not match",
+    path: ["confirmNewPasword"],
+  });
 
-type UpdateEmailFormValues = z.infer<typeof UpdateEmailSchema>;
+type UpdatePasswordFormValues = z.infer<typeof UpdatePasswordlSchema>;
 
-const UpdateEmailButton = () => {
+const UpdatePasswordButton = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { user, loading, refreshSession } = useSession();
 
-  const form = useForm<UpdateEmailFormValues>({
+  const form = useForm<UpdatePasswordFormValues>({
     mode: "onSubmit",
-    resolver: zodResolver(UpdateEmailSchema),
+    resolver: zodResolver(UpdatePasswordlSchema),
   });
 
-  const handleSubmit = async (values: UpdateEmailFormValues) => {
+  const handleSubmit = async (values: UpdatePasswordFormValues) => {
     try {
       setIsLoading(true);
-      await updateUserEmail(values.email, {
+      await updateUserPassword(values.newPassword, {
         email: user?.email || "",
         password: values.password,
       });
@@ -72,31 +78,31 @@ const UpdateEmailButton = () => {
       <DialogTrigger asChild>
         <ButtonItem
           onClick={handleOpen}
-          value={user?.email}
+          value="********"
           isLoading={loading}
           className="block justify-between items-center lg:flex"
         >
-          Email
+          password
         </ButtonItem>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <DialogHeader>
-              <DialogTitle>Update email</DialogTitle>
-              <DialogDescription>Update your email address</DialogDescription>
+              <DialogTitle>Update password</DialogTitle>
+              <DialogDescription>Update your password</DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Current password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="exemple@exemple.com"
-                        type="email"
+                        placeholder="********"
+                        type="password"
                         {...field}
                       />
                     </FormControl>
@@ -107,10 +113,28 @@ const UpdateEmailButton = () => {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name="newPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmNewPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm new Password</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="********"
@@ -141,4 +165,4 @@ const UpdateEmailButton = () => {
   );
 };
 
-export default UpdateEmailButton;
+export default UpdatePasswordButton;
