@@ -11,6 +11,7 @@ import {
 import ButtonList from "@/components/ui/ButtonList";
 import ButtonItem from "@/components/ui/ButtonList/ButtonItem";
 import UpdateEmailButton from "./_components/UpdateEmailButton";
+import UpdatePasswordButton from "./_components/UpdatePasswordButtton";
 
 const AccountPage = () => {
   const { user } = useSession();
@@ -40,13 +41,7 @@ const AccountPage = () => {
 
             <UpdateEmailButton />
 
-            <ButtonItem
-              value="********"
-              onClick={handleClick}
-              className="block justify-between items-center lg:flex"
-            >
-              Password
-            </ButtonItem>
+            <UpdatePasswordButton />
           </ButtonList>
         </CardContent>
       </Card>
