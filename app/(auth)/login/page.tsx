@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, LogIn } from "lucide-react";
 import { signInUser } from "@/authentification/auth.supbase";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next-nprogress-bar";
 
@@ -58,64 +58,70 @@ const LoginPage = () => {
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="h-screen w-screen flex justify-center items-center"
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle>Login</CardTitle>
-            <CardDescription>Login to dashboard</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="exemple@exemple.com"
-                      type="email"
-                      {...field}
-                    />
-                  </FormControl>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="h-screen w-screen flex justify-center items-center"
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>Login</CardTitle>
+              <CardDescription>Login to dashboard</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="mb-4">
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="exemple@exemple.com"
+                        type="email"
+                        {...field}
+                      />
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="********" type="password" {...field} />
-                  </FormControl>
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter>
-            <Button className="gap-2" disabled={isLoading}>
-              {isLoading ? (
-                <Loader2 size="16" className="animate-spin" />
-              ) : (
-                <LogIn size="16" />
-              )}
-              Login
-            </Button>
-          </CardFooter>
-        </Card>
-      </form>
-    </Form>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+            <CardFooter>
+              <Button className="gap-2" disabled={isLoading}>
+                {isLoading ? (
+                  <Loader2 size="16" className="animate-spin" />
+                ) : (
+                  <LogIn size="16" />
+                )}
+                Login
+              </Button>
+            </CardFooter>
+          </Card>
+        </form>
+      </Form>
+    </Suspense>
   );
 };
 
