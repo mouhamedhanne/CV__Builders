@@ -13,8 +13,10 @@ import ButtonList from "@/components/ui/ButtonList";
 import ButtonItem from "@/components/ui/ButtonList/ButtonItem";
 import UpdateEmailButton from "./_components/UpdateEmailButton";
 import UpdatePasswordButton from "./_components/UpdatePasswordButtton";
+import { useSearchParams } from "next/navigation";
 
 const AccountPage = () => {
+  const searchParams = useSearchParams();
   const { user } = useSession();
   //console.log(user);
 
