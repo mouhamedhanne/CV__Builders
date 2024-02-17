@@ -58,7 +58,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}

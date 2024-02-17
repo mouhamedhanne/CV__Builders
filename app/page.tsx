@@ -3,7 +3,7 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <main>
         <div>
           <Homepage />
@@ -12,3 +12,4 @@ export default function Home() {
     </Suspense>
   );
 }
+//corriger les bug de l'authentification
