@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import useSession from "@/hooks/useSession";
 import {
   Card,
@@ -22,30 +23,34 @@ const AccountPage = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 space-y-8">
-      <h1 className="text-xl font-bold">My Account</h1>
-      <Card>
-        <CardHeader>
-          <CardTitle>Personnal Informations</CardTitle>
-          <CardDescription>Manage your personnal informations</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ButtonList>
-            <ButtonItem
-              value="Mouhamedhanne"
-              onClick={handleClick}
-              className="block justify-between items-center lg:flex"
-            >
-              UserName
-            </ButtonItem>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="container mx-auto py-8 space-y-8">
+        <h1 className="text-xl font-bold">My Account</h1>
+        <Card>
+          <CardHeader>
+            <CardTitle>Personnal Informations</CardTitle>
+            <CardDescription>
+              Manage your personnal informations
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ButtonList>
+              <ButtonItem
+                value="Mouhamedhanne"
+                onClick={handleClick}
+                className="block justify-between items-center lg:flex"
+              >
+                UserName
+              </ButtonItem>
 
-            <UpdateEmailButton />
+              <UpdateEmailButton />
 
-            <UpdatePasswordButton />
-          </ButtonList>
-        </CardContent>
-      </Card>
-    </div>
+              <UpdatePasswordButton />
+            </ButtonList>
+          </CardContent>
+        </Card>
+      </div>
+    </Suspense>
   );
 };
 

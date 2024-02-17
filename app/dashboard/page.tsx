@@ -1,5 +1,11 @@
+import { Suspense } from "react";
+
 const CvBuilder = () => {
-  return <div>Dashboard</div>;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>Dashboard</div>;
+    </Suspense>
+  );
 };
 
 export default CvBuilder;
