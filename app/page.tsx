@@ -12,3 +12,4 @@ export default function Home() {
     </Suspense>
   );
 }
+//corriger les bug de l'authentification
