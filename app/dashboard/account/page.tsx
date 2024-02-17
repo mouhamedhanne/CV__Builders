@@ -23,7 +23,7 @@ const AccountPage = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <div className="container mx-auto py-8 space-y-8">
         <h1 className="text-xl font-bold">My Account</h1>
         <Card>
